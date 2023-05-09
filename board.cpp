@@ -213,6 +213,7 @@ bool sudoku_board::solution_count(int count, int clear_left) {
                 board[i][j].first = perm[index] + '0';
                 if (check_correct(true)) {
                     ans += solution_count(count, clear_left - 1);
+                    if (ans > 1) return true;
                 }
             }
 
