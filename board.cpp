@@ -207,7 +207,7 @@ bool sudoku_board::solution_count(int count, int clear_left) {
             if (board[i][j].first != ' ' || found) continue;
 
             found = true;
-            int ans = 0;
+            int ans = count;
 
             for (int index = 0; index < 9; index++) {
                 board[i][j].first = perm[index] + '0';
