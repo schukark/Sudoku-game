@@ -25,8 +25,9 @@ public:
     bool check_correct(bool debug) const;
     void generate(int quantity);
     void clear_cell(int x, int y);
+    void clear_cells();
 private:
-    bool solution_count(int current, int clear_left);
+    bool solution_count(int current, int clear_left, int last_i, int last_j);
     void swap_rows(int row1, int row2);
     void swap_cols(int col1, int col2);
     bool fill_full(int row, int col);

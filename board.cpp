@@ -188,7 +188,7 @@ bool sudoku_board::fill_full(int row, int col) {
     return false;
 }
 
-bool sudoku_board::solution_count(int count, int clear_left) {
+bool sudoku_board::solution_count(int count, int clear_left, int last_i = -1, int last_j = -1) {
     if (!clear_left) {
         count = count + check_correct(true);
         if (count > 1) return true;
@@ -200,10 +200,16 @@ bool sudoku_board::solution_count(int count, int clear_left) {
     std::shuffle(perm.begin(), perm.end(), mt);
 
     bool found = false;
+    int i = 0, j = 0;
 
-    for (int i = 0; i < 9; i++) {
+    if (last_j == 8) {
+        i = last_i + 1;
+        j = 0;
+    }
+
+    for (; i < 9; i++) {
         if (found) break;
-        for (int j = 0; j < 9; j++) {
+        for (; j < 9; j++) {
             if (board[i][j].first != ' ' || found) continue;
 
             found = true;
@@ -212,7 +218,7 @@ bool sudoku_board::solution_count(int count, int clear_left) {
             for (int index = 0; index < 9; index++) {
                 board[i][j].first = perm[index] + '0';
                 if (check_correct(true)) {
-                    ans += solution_count(count, clear_left - 1);
+                    ans += solution_count(count, clear_left - 1, i, j);
                     if (ans > 1) return true;
                 }
             }
@@ -230,4 +236,13 @@ bool sudoku_board::delete_check(int row, int col, int left) {
     if (solution_count(0, left)) return false;
     board[row][col].first = ' ';
     return true;
+}
+
+void sudoku_board::clear_cells() {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (!board[i][j].second) board[i][j].first = ' ';
+        }
+    }
+    print_board();
 }

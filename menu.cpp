@@ -35,6 +35,7 @@ void menu::print_menu() {
     std::cout << "check - if you want to check correctness" << std::endl;
     std::cout << "menu - if you want to see the menu" << std::endl;
     std::cout << "return - if you want to return to the main menu" << std::endl;
+    std::cout << "clear - if you want to clear all cells" << std::endl;
     std::cout << "exit - if you want to exit" << std::endl;
     action();
 }
@@ -73,7 +74,11 @@ void menu::action() {
         init();
     }
     else if (state == "exit") {
+        std::cout << "Goodbye!" << std::endl;
         exit(0);
+    }
+    else if (state == "clear") {
+        clear_cells();
     }
     else {
         std::cout << "Incorrect input" << std::endl;
